@@ -1,0 +1,43 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #8C7450;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  color: #2B2118;
+  padding: 0 48px;
+  box-sizing: border-box;
+}
+
+footer .developed-by {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0;
+  vertical-align: middle;
+}
+
+footer .developed-by > a {
+  text-decoration: none;
+  color: #F7F3E3;
+}
+
+.fork-me-on-github {
+  height: 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #F7F3E3;
+  display: inline-block;
+  color: #2B2118;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 4px;
+  text-align: center;
+}

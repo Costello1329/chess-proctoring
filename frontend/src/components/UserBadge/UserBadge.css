@@ -1,0 +1,11 @@
+.user-badge {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.user-badge > h3 {
+  font-weight: 300;
+  margin: 0;
+}

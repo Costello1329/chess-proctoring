@@ -1,0 +1,30 @@
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cormorant Garamond', 'Arial';
+  background-color: #F7F3E3;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+.app {
+  position: absolute;
+  top: 100px;
+  height: calc(100% - 60px - 40px - 40px);
+  overflow-y: auto;
+  padding: 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-tall {
+  height: calc(100% - 60px - 40px);
+  top: 60px;
+}

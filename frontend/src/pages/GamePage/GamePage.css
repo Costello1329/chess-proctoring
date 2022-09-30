@@ -1,0 +1,15 @@
+.chessboard-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.chessboard-wrapper > div {
+  margin: 8px 0;
+}
+
+.chessboard-wrapper > .player-name {
+  font-size: 24px;
+}

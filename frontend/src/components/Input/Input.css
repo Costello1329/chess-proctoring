@@ -1,0 +1,22 @@
+.label {
+  margin-bottom: 32px;
+}
+
+.input {
+  min-width: 120px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #F7F3E3;
+  border: none;
+  outline: none;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  font-size: unset;
+  font-family: unset;
+  margin-top: 4px;
+}
+
+.validation-error-text {
+  color: #9f1c29;
+  margin-top: 4px;
+}

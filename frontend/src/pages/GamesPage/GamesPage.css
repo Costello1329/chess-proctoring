@@ -1,0 +1,34 @@
+.games-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-record {
+  background-color: #AF9164;
+  color: #F7F3E3;
+  width: 640px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.game-record .center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-record .creator-text {
+  margin: 0;
+}
+
+.game-record .highlight {
+  color: #2B2118;
+}
+
+.game-record .vs-text {
+  font-size: 24px;
+}

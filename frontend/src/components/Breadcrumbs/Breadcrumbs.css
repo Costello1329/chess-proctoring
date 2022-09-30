@@ -1,0 +1,23 @@
+.breadcrumbs {
+  position: fixed;
+  top: 60px;
+  left: 0px;
+  width: 100%;
+  height: 40px;
+  background-color: #8C7450;
+  padding: 0 48px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.breadcrumbs-nav {
+  cursor: pointer;
+}
+
+.breadcrumbs-nav.highlight {
+  color: #F7F3E3;
+  cursor: unset;
+}

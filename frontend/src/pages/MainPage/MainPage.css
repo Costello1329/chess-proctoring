@@ -1,0 +1,22 @@
+.main-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 48px;
+  height: 100%;
+  width: 100%;
+}
+
+.main-page > div {
+  height: 240px;
+  width: 240px;
+  font-size: 24px;
+  border-radius: 8px;
+  background-color: #8C7450;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #F7F3E3;
+}

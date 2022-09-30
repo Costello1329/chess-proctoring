@@ -1,0 +1,50 @@
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+form.form {
+  background-color: #AF9164;
+  color: #F7F3E3;
+  border-radius: 8px;
+  padding: 24px 32px;
+  font-weight: 300;
+  margin: auto 0;
+  font-size: unset;
+}
+
+form.form.form-s {
+  width: 320px;
+}
+
+form.form.form-m {
+  width: 480px;
+}
+
+form.form.form-l {
+  width: 640px
+}
+
+form.form h2 {
+  font-weight: 300;
+  margin-top: 0;
+  margin-bottom: 32px;
+}
+
+form input.input {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+form button.button {
+  margin-top: 8px
+}
+
+form .validation-error-text {
+  margin-top: -4px;
+  margin-bottom: 8px;
+  width: 100%;
+}
