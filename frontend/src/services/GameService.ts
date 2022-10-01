@@ -13,6 +13,13 @@ export interface GameGetRes {
   fen: string;
 }
 
+interface GamePostReq {
+  game_id: string;
+  fen: string;
+}
+
+export interface GamePostRes {}
+
 class GameService {
   async get (gameId: string) {
     const sessionId = stores[USER_STORE].state.sessionId;
@@ -27,6 +34,26 @@ class GameService {
       url: GAME_ENDPOINT,
       headers: { [SESSION_ID_HEADER]: sessionId },
       params: { 'game_id': gameId }
+    }).then(({ data }) => data).catch(err => {
+      notificationService.notify({
+        type: NotificationType.ERROR,
+        message: err
+      });
+    }) ?? null;
+  }
+  async set (gameId: string, fen: string) {
+    const sessionId = stores[USER_STORE].state.sessionId;
+
+    return sessionId === null ? null : await axios.request<
+      GamePostRes,
+      AxiosResponse<GamePostRes, GamePostReq>,
+      GamePostReq
+    >({
+      method: 'POST',
+      baseURL: 'http://localhost:8000/',
+      url: GAME_ENDPOINT,
+      headers: { [SESSION_ID_HEADER]: sessionId },
+      data: { 'game_id': gameId, fen }
     }).then(({ data }) => data).catch(err => {
       notificationService.notify({
         type: NotificationType.ERROR,

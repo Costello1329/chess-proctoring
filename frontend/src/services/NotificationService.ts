@@ -13,10 +13,10 @@ interface Notification {
 class NotificationService {
   notify ({ type, message }: Notification) {
     switch (type) {
-      case NotificationType.SUCCESS: console.log(message); break;
-      case NotificationType.WARNING: console.warn(message); break;
-      case NotificationType.ERROR: console.error(message); break;
-      case NotificationType.INFO: console.info(message); break;
+      case NotificationType.SUCCESS: console.log(`SUCCESS: ${message}`); break;
+      case NotificationType.WARNING: console.log(`WARNING: ${message}`); break;
+      case NotificationType.ERROR: console.log(`ERROR: ${message}`); break;
+      case NotificationType.INFO: console.log(`INFO: ${message}`); break;
     }
   }
 }

@@ -30,7 +30,7 @@ export function GamesPage () {
 
   return (
     <div className='games-container'>{
-      rooms?.map(({ room_id, creator, white_player, black_player, created_at, result}, i) =>
+      rooms?.reverse().map(({ room_id, creator, white_player, black_player, created_at, result}, i) =>
         <div key={i} className='game-record'>
           <p className='creator-text'>
             Created by {highlight(creator)} at {highlight(new Date(created_at).toUTCString())}

@@ -24,14 +24,14 @@ class RoomManageView(APIView):
         relation = request.GET.get("relation", "participant")
 
         if relation == "creator":
-            rooms = [*Room.objects.filter(creator_id=user_id).all()]
+            rooms = Room.objects.filter(creator_id=user_id).all()
         elif relation == "participant":
-            rooms = [
-                *Room.objects.filter(white_player_id=user_id).all(),
-                *Room.objects.filter(black_player_id=user_id).all()
-            ]
+            rooms = Room.objects.filter(white_player_id=user_id).all() |\
+                    Room.objects.filter(black_player_id=user_id).all()
         else:
             return get_internal_server_error_response()
+
+        rooms = rooms.order_by('created_at')
 
         body = {
             "rooms": [{

@@ -27,7 +27,7 @@ export function CreateGamePage () {
       onSubmit={async ([blackPlayer, currentUserHasWhitePieces]) => {
         let whitePlayer = userStoreState.username!;
 
-        if (currentUserHasWhitePieces as boolean)
+        if (!currentUserHasWhitePieces)
           [whitePlayer, blackPlayer] = [blackPlayer as string, whitePlayer];
 
         const roomId = await roomManageService.create(whitePlayer, blackPlayer as string);

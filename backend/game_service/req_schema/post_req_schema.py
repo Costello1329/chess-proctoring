@@ -1,11 +1,11 @@
-from main_function.schema_entities.username_schema import username_schema
+from main_function.schema_entities.guid_schema import guid_schema
 
 post_req_schema = {
     "type": "object",
     "properties": {
-        "white_player_username": username_schema,
-        "black_player_username": username_schema
+        "game_id": guid_schema,
+        "fen": {"type": "string"}
     },
-    "required": ["white_player_username", "black_player_username"],
+    "required": ["game_id", "fen"],
     "additionalProperties": False
 }

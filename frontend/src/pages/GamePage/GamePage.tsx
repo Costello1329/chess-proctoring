@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GameGetRes, gameService } from '../../services/GameService';
 import { Chessboard } from 'react-chessboard';
-import { Chess, PartialMove } from 'chess.ts'
+import { Chess, Move, PartialMove } from 'chess.ts'
 import * as lodash from 'lodash';
 import './GamePage.css';
+import { HOME_PAGE } from '../routes';
+import { useStoreState } from '@proscom/prostore-react';
+import { IUserStoreState } from '../../stores/UserStore';
+import { USER_STORE } from '../../stores/stores';
 
 function setIntervalImmediately<Args extends any[]>(
   callback: (...args: Args) => void,
@@ -18,56 +22,76 @@ function setIntervalImmediately<Args extends any[]>(
 const UPDATE_TIME = 1000;
 
 export function GamePage () {
-  const { roomId } = useParams();
+  const roomId = useParams().roomId!;
+  const navigate = useNavigate();
+  const [thisPlayer, setThisPlayer] = useState<string | null>(null);
+  const [otherPlayer, setOtherPlayer] = useState<string | null>(null);
   const [pulse, setPulse] = useState<boolean>(false);
-  const [gameData, setGameData] = useState<GameGetRes | null>(null);
+  const [currentUserPlaysWhite, setCurrentUserPlaysWhite] = useState<boolean | null>(null);
+  const [game, setGame] = useState<Chess | null>(null);
+  const userStoreState = useStoreState<IUserStoreState>(USER_STORE);
 
   useEffect(() => {
     if (pulse) return;
 
     setPulse(true);
     const intervalId = setIntervalImmediately(
-      async () => setGameData(await gameService.get(roomId!)),
+      async () => {
+        const res = await gameService.get(roomId!);
+        if (res === null || userStoreState.username === null) {
+          navigate(HOME_PAGE);
+          return;
+        }
+
+        const currentUserPlaysWhite = userStoreState.username === res.white_player;
+        setThisPlayer(currentUserPlaysWhite ? res.white_player : res.black_player);
+        setOtherPlayer(!currentUserPlaysWhite ? res.white_player : res.black_player);
+        setCurrentUserPlaysWhite(userStoreState.username === res.white_player);
+        setGame(new Chess(res.fen));
+      },
       UPDATE_TIME
     );
 
     return () => clearInterval(intervalId);
-  }, [gameData?.fen, gameData?.white_player, gameData?.black_player, pulse, roomId]);
+  }, [navigate, roomId]); /// pulse should NOT be included!
 
-  const [game, setGame] = useState(new Chess());
+  if (roomId === undefined) return null;
 
-  function makeAMove(move: string | PartialMove) {
+  function makeAMove(move: string | PartialMove): string | null {
+    if (game === null) return null;
     const gameCopy = lodash.cloneDeep(game);
     const result = gameCopy.move(move);
+    if (
+      (result === null) ||
+      (result.color === 'w') !== currentUserPlaysWhite
+    ) return null;
+    
     setGame(gameCopy);
-    return result;
+    return gameCopy.fen();
   }
 
-  // function makeRandomMove() {
-  //   const possibleMoves = game.moves();
-  //   if (game.gameOver() || game.inDraw() || possibleMoves.length === 0)
-  //     return;
-  //   const randomIndex = Math.floor(Math.random() * possibleMoves.length);
-  //   makeAMove(possibleMoves[randomIndex]);
-  // }
-
   function onDrop(sourceSquare: string, targetSquare: string) {
-    const move = makeAMove({
+    const fen = makeAMove({
       from: sourceSquare,
       to: targetSquare,
       promotion: 'q'
     });
 
-    if (move === null) return false;
-    // setTimeout(makeRandomMove, 200);
+    if (fen === null) return false;
+
+    gameService.set(roomId, fen);
     return true;
   }
 
-  return (
+  return game === null || thisPlayer === null || otherPlayer === null ? null : (
     <div className='chessboard-wrapper'>
-      <span className='player-name'>{gameData?.black_player}</span>
-      <Chessboard position={game.fen()} onPieceDrop={onDrop} />
-      <span className='player-name'>{gameData?.white_player}</span>
+      <span className='player-name'>{otherPlayer}</span>
+      <Chessboard
+        position={game.fen()}
+        onPieceDrop={onDrop}
+        boardOrientation={currentUserPlaysWhite ? 'white' : 'black'}
+      />
+      <span className='player-name'>{thisPlayer}</span>
     </div>
   );
 }
