@@ -1,2 +1,2 @@
-# Sync Poller
-An SPA app for creating and conducting an online test on code syntax and semantics with all-students-synchronisation feature.
+# Chess Proctoring
+A simple SPA application for playing online chess
